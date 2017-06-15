@@ -1,1 +1,51 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body, html {
+  font-family: 'Roboto';
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: -webkit-linear-gradient(left top, rgb(255, 221, 204), rgb(255, 85, 0)); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom right, rgb(255, 221, 204), rgb(255, 85, 0)); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom right, rgb(255, 221, 204), rgb(255, 85, 0)); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom right, rgb(255, 221, 204), rgb(255, 85, 0)); /* Standard syntax */
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100%;
+  width: 100%;
+}
+
+.site-header-content {
+  opacity: 1.0;
+  display: flex;
+  align-items: center;
+}
+
+.site-header-content > h1 {
+  color: white;
+}
+
+.site-header-content > button {
+  color: white;
+  font-size: 2em;
+  margin-right: 5em;
+  margin-top: 0.5em;
+  margin-left: auto;
+  border: none;
+  background: none;
+}
+
+.site-header {
+  background: rgb(77, 77, 77);
+  top: 0;
+  left: 0;
+  height: 8rem;
+  position: absolute;
+  padding-left: 5em;
+  width: 100%;
+}
+
+.site-content {
+  margin-top: 5em;
+}

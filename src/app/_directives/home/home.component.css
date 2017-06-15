@@ -1,0 +1,21 @@
+div.home-box {
+  width: 50em;
+  height: 80em;
+  margin: 10em auto;
+  background-color: rgb(77, 77, 77);
+  border-radius: 25px;
+}
+
+.home-box > h1, h2 {
+  color: white;
+  padding-top: 2em;
+  padding-left: 2em;
+}
+
+.container {
+  width: 50em;
+}
+
+label {
+  color: white;
+}

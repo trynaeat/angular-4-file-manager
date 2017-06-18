@@ -8,10 +8,13 @@
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="text" class="form-control" id="password" name="password" [(ngModel)]="model.password" required>
+        <input type="password" class="form-control" id="password" name="password" [(ngModel)]="model.password" required>
       </div>
       <div>
         <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+      <div *ngIf="showError" class="text-center error">
+        <span>Failed to log in.  Check your username and password.</span>
       </div>
     </form>
   </div>

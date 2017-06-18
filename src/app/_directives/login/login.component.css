@@ -19,3 +19,8 @@ label {
 .container {
   width: 25em;
 }
+
+div.error {
+  color: red;
+  margin-top: 1em;
+}

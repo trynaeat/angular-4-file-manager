@@ -34,7 +34,7 @@ const port = process.env.PORT || '3000';
 app.set('port', port);
 
 /**
- * Create HTTP server.
+ * Create HTTPS server.
  */
 const server = https.createServer({
   key: fs.readFileSync('./server/ssl/server.key'),

@@ -2,7 +2,10 @@
 <div class="site-header">
   <div class="site-header-content">
     <h1>Welcome to {{title}}</h1>
-    <button (click)="logout()" *ngIf="info.loggedIn" title="logout"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
+    <span>
+      <button (click)="goHome()" title="home"><i class="fa fa-home" aria-hidden="true"></i></button>
+      <button (click)="logout()" *ngIf="info.loggedIn" title="logout"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
+    </span>
   </div>
 </div>
 <div class="site-content">

@@ -12,6 +12,10 @@ export class AuthenticationService {
     loggedIn : localStorage.getItem('currentUser') ? true : false
   };
 
+  getToken() {
+    return JSON.parse(localStorage.getItem('currentUser')).token;
+  }
+
   login(username: string, password: string) {
     let headers = new Headers({ 'Content-Type' : 'Application/json' });
     let options = new RequestOptions({ headers : headers });

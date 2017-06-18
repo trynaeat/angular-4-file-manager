@@ -10,6 +10,8 @@ import { HomeComponent } from './_directives/home/home.component';
 import { PageNotFoundComponent } from './_directives/page-not-found/page-not-found.component';
 import { AuthGuard } from './authGuard/auth.guard';
 import { AuthenticationService } from './_services/authentication.service';
+import { UserService } from './_services/user.service';
+import { FileBrowserComponent } from './_directives/file-browser/file-browser.component';
 
 const appRoutes: Routes = [
   {
@@ -21,6 +23,12 @@ const appRoutes: Routes = [
     path: 'home',
     component: HomeComponent,
     data: { title: 'Home' },
+    canActivate: [ AuthGuard ]
+  },
+  {
+    path: 'files',
+    component: FileBrowserComponent,
+    data: { title: 'Files' },
     canActivate: [ AuthGuard ]
   },
   { path: '',
@@ -35,7 +43,8 @@ const appRoutes: Routes = [
     AppComponent,
     LoginComponent,
     PageNotFoundComponent,
-    HomeComponent
+    HomeComponent,
+    FileBrowserComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +52,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     HttpModule
   ],
-  providers: [AuthGuard, AuthenticationService],
+  providers: [AuthGuard, AuthenticationService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

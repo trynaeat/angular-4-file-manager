@@ -1,0 +1,16 @@
+<div class="main-box">
+  <h1>
+    File Browser
+  </h1>
+  <span><button title="upload"><i class="fa fa-upload" aria-hidden="true" (click)="fileChangeSelect($event)"></i></button></span>
+  <input #fileInput type="file" (change)="fileChange($event)" placeholder="upload" style="display:none"/>
+    <div *ngFor="let file of files" class="file-item">
+      <span [textContent]="file.filename" class="title"></span>
+      <span [textContent]="file.description" class="description"></span>
+      <span>
+        <a title="download" target="_self" href="/api/download/{{file._id}}?token={{authService.getToken()}}" download="{{file.filename}}"><i class="fa fa-download" aria-hidden="true"></i></a>
+        <button title="edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+        <button title="delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+      </span>
+    </div>
+</div>

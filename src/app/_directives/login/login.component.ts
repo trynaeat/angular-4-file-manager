@@ -25,8 +25,10 @@ export class LoginComponent implements OnInit {
   model = new User('', '');
 
   submitted = false;
+  showError = false;
 
   onSubmit() {
+    this.showError = false;
     this.submitted = true;
     this.authenticationService.login(this.model.username, this.model.password)
       .subscribe(
@@ -34,6 +36,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/']);
         },
         error => {
+          this.showError = true;
           console.log('login failure');
         }
       );

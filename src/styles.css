@@ -26,12 +26,15 @@ body, html {
   color: white;
 }
 
-.site-header-content > button {
-  color: white;
-  font-size: 2em;
+.site-header-content > span {
   margin-right: 5em;
   margin-top: 0.5em;
   margin-left: auto;
+}
+
+button {
+  color: white;
+  font-size: 2em;
   border: none;
   background: none;
 }
@@ -48,4 +51,26 @@ body, html {
 
 .site-content {
   margin-top: 5em;
+}
+
+div.main-box {
+  width: 50em;
+  height: 80em;
+  margin: 10em auto;
+  padding: 2em 2em 2em 4em;
+  background-color: rgb(77, 77, 77);
+  border-radius: 25px;
+}
+
+.main-box > h1, h2 {
+  color: white;
+}
+
+.main-box > .content {
+  padding: 2em 2em 2em 2em;
+}
+
+a {
+  color: rgb(255, 85, 0);
+  font-size: 2em;
 }

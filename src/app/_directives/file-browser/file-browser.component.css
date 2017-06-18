@@ -1,0 +1,28 @@
+.file-item > span.title {
+  color: white;
+  font-size: 2em;
+  display: block;
+}
+
+.file-item> span.description {
+  color: white;
+  font-size: 1em;
+  display: block;
+  font-style: italic;
+}
+
+div.file-item {
+  background-color: rgb(255, 120, 0);
+  border-radius: 25px;
+  padding: 1em 1em 1em 1em;
+  margin-bottom: 1em;
+  box-shadow: 5px 5px black;
+}
+
+a {
+  color: white;
+}
+
+h1 {
+  display: inline;
+}

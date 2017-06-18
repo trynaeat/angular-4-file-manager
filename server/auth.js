@@ -10,7 +10,12 @@ var params = {
   jwtFromRequest: ExtractJwt.fromAuthHeader()
 };
 
-var strategy = new Strategy(params, function(payload, done) {
+var paramsQuery = {
+  secretOrKey: config.jwtSecret,
+  jwtFromRequest: ExtractJwt.fromUrlQueryParameter('token')
+}
+
+function dbAuth(payload, done) {
   appDB.connect().then(function(db) {
     return db.collection('users').findOne({ _id : new ObjectID(payload.id) });
   })
@@ -26,14 +31,21 @@ var strategy = new Strategy(params, function(payload, done) {
   .catch(function() {
     return done(new Error('Error connecting to DB'), null);
   });
-});
-passport.use(strategy);
+}
+
+var strategy = new Strategy(params, dbAuth);
+var queryStrategy = new Strategy(paramsQuery, dbAuth);
+passport.use('jwtHeader', strategy);
+passport.use('jwtQuery', queryStrategy);
 
 module.exports = {
   initialize: function() {
     return passport.initialize();
   },
   authenticate: function() {
-    return passport.authenticate('jwt', { session : false });
+    return passport.authenticate('jwtHeader', { session : false });
+  },
+  authenticateQuery: function() {
+    return passport.authenticate('jwtQuery', { session : false });
   }
 };

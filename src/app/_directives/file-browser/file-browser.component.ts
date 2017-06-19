@@ -1,6 +1,8 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { UserService } from '../../_services/user.service';
 import { AuthenticationService } from '../../_services/authentication.service';
+import { ModalComponent } from '../modal/modal.component';
+import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 
 @Component({
   selector: 'app-file-browser',
@@ -9,6 +11,8 @@ import { AuthenticationService } from '../../_services/authentication.service';
 })
 export class FileBrowserComponent implements OnInit {
   @ViewChild('fileInput') fileInput:ElementRef;
+  @ViewChild(ModalComponent) progressModal:ModalComponent;
+  @ViewChild(ProgressBarComponent) progressBar:ProgressBarComponent;
 
   page = 1;
   size = 100;
@@ -18,26 +22,48 @@ export class FileBrowserComponent implements OnInit {
   constructor(
     private userService : UserService,
     private authService : AuthenticationService
-  ) { }
+  ) {
+    this.userService.progress$.subscribe(
+      data => {
+        this.progressBar.setProgress(data);
+      }
+    )
+  }
 
   ngOnInit() {
     this.page = 1;
     this.size = 100;
     this.loading = true;
-    this.getFiles(this.page, this.size)
-      .subscribe(
-        data => {
-          this.files = data;
-          this.loading = false;
-        },
-        error => {
-          console.log('Error getting files ' + error);
-        }
-      )
+    this.progressBar.setProgress(0);
+    this.getFiles(this.page, this.size);
   }
 
   getFiles(page : number, size : number) {
-    return this.userService.getFiles(page, size);
+    return this.userService.getFiles(page, size)
+    .subscribe(
+      data => {
+        this.files = data;
+        this.loading = false;
+      },
+      error => {
+        console.log('Error getting files ' + error);
+      }
+    );
+  }
+
+  deleteFile(id: string) {
+    return this.userService.deleteFile(id)
+      .subscribe(
+        data => {
+          console.log('deleted');
+        },
+        error => {
+          console.log('Error deleting file ' + error);
+        },
+        () => {
+          this.getFiles(this.page, this.size);
+        }
+      )
   }
 
   fileChangeSelect() {
@@ -51,6 +77,7 @@ export class FileBrowserComponent implements OnInit {
       let file: File = fileList[0];
       let formData: FormData = new FormData();
       formData.append('uploadFile', file, file.name);
+      this.progressModal.show();
       this.userService.postFiles(formData)
         .subscribe(
           data => {
@@ -58,6 +85,12 @@ export class FileBrowserComponent implements OnInit {
           },
           error => {
             console.log('error');
+          },
+          () => {
+            console.log('finally');
+            this.progressModal.hide();
+            this.progressBar.setProgress(0);
+            this.getFiles(this.page, this.size);
           }
         )
     }

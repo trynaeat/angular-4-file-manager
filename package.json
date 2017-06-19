@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
+    "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "core-js": "^2.4.1",
     "express": "^4.15.3",

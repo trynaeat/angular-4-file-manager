@@ -12,6 +12,8 @@ import { AuthGuard } from './authGuard/auth.guard';
 import { AuthenticationService } from './_services/authentication.service';
 import { UserService } from './_services/user.service';
 import { FileBrowserComponent } from './_directives/file-browser/file-browser.component';
+import { ModalComponent } from './_directives/modal/modal.component';
+import { ProgressBarComponent } from './_directives/progress-bar/progress-bar.component';
 
 const appRoutes: Routes = [
   {
@@ -44,7 +46,9 @@ const appRoutes: Routes = [
     LoginComponent,
     PageNotFoundComponent,
     HomeComponent,
-    FileBrowserComponent
+    FileBrowserComponent,
+    ModalComponent,
+    ProgressBarComponent
   ],
   imports: [
     BrowserModule,

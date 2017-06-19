@@ -8,6 +8,10 @@ const jwt = require('jwt-simple');
 var ObjectID = require('mongodb').ObjectID;
 var multer = require('multer');
 var upload = multer({ dest : '/Users/jakparks/uploads/' });
+var fs = require('fs');
+var Promise = require('bluebird');
+
+var deleteFile = Promise.promisify(fs.unlink);
 
 router.post('/token', (req, res) => {
   if(req.body.username && req.body.password) {
@@ -53,7 +57,7 @@ router.get('/files', auth.authenticate(), (req, res) => {
   });
 });
 
-router.get('/download/:id', auth.authenticateQuery(), (req, res) => {
+router.get('/file/:id', auth.authenticateQuery(), (req, res) => {
   var id = req.params.id ? new ObjectID(req.params.id) : null;
   if(!id) {
     return res.status(400).end();
@@ -66,7 +70,7 @@ router.get('/download/:id', auth.authenticateQuery(), (req, res) => {
       return res.status(400).json({ error : 'File not found' }).end();
     }
     var path = file.location;
-    res.download(path);
+    res.download(path, file.filename);
   })
   .catch(function(err) {
     console.log(err);
@@ -74,10 +78,44 @@ router.get('/download/:id', auth.authenticateQuery(), (req, res) => {
   });
 });
 
-router.post('/upload', auth.authenticate(), upload.any(), (req, res) => {
+router.delete('/file/:id', auth.authenticate(), (req, res) => {
+  var id = req.params.id ? new ObjectID(req.params.id) : null;
+  if(!id) {
+    return res.status(400).end();
+  }
+  var db = null;
+  appDB.connect().then(function(result) {
+    db = result;
+    return db.collection('files').findOne({ _id : id });
+  })
+  .then(function(file) {
+    return deleteFile(file.location);
+  })
+  .then(function() {
+    return db.collection('files').deleteOne({ _id : id });
+  })
+  .then(function() {
+    res.json({ status: 'success' }).status(200).end();
+  })
+  .catch(function(err) {
+    console.log(err);
+    res.status(500).end();
+  });
+});
+
+router.post('/file', auth.authenticate(), upload.any(), (req, res) => {
+  // Only support one file at a time at the moment...
   var files = req.files;
-  console.log(files);
-  res.json({ status: 'success' }).status(200).end();
+  var file = files[0];
+  appDB.connect().then(function(db) {
+    return db.collection('files').insert({ filename: file.originalname, description: '', location: file.path });
+  })
+  .then(function() {
+    res.json({ status: 'success' }).status(200).end();
+  })
+  .catch(function() {
+    res.status(500).end();
+  });
 });
 
 router.get('/secret', auth.authenticate(), (req, res) => {

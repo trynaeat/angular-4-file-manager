@@ -1,1 +1,5 @@
-<button class="pull-left" (click)="onClickLeft()" [disabled]="pager.page <= 1"><i class="fa fa-arrow-left"></i></button><button class="pull-right" (click)="onClickRight()" [disabled]="pager.lastPage"><i class="fa fa-arrow-right"></i></button>
+<div class="text-center">
+  <button class="pull-left" (click)="onClickLeft()" [disabled]="pager.page <= 1"><i class="fa fa-arrow-left"></i></button>
+  <span [textContent]="'Showing ' + pager.startIndex + '-' + (pager.startIndex + pager.data.length - 1) + ' of ' + pager.totalSize + ' items'"></span>
+  <button class="pull-right" (click)="onClickRight()" [disabled]="pager.lastPage"><i class="fa fa-arrow-right"></i></button>
+</div>

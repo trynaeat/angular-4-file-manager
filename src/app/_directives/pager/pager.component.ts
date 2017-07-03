@@ -16,12 +16,10 @@ export class PagerComponent implements OnInit {
   }
 
   onClickRight() {
-    console.log('paging right');
     this.pager.getNextPage();
   }
 
   onClickLeft() {
-    console.log('paging left');
     this.pager.getPreviousPage();
   }
 
@@ -30,6 +28,7 @@ export class PagerComponent implements OnInit {
 export class Pager {
 
   public page = 1;
+  public startIndex = 1;
   public data = [];
   public lastPage = false;
   public totalSize;
@@ -50,6 +49,7 @@ export class Pager {
       this.data = data.data;
       this.lastPage = data.lastPage;
       this.totalSize = data.totalSize;
+      this.startIndex = ((this.page - 1) * this.size) + 1;
     });
   }
 
@@ -60,6 +60,7 @@ export class Pager {
         this.data = data.data;
         this.lastPage = data.lastPage;
         this.totalSize = data.totalSize;
+        this.startIndex = ((this.page - 1) * this.size) + 1;
       });
     }
   }
@@ -71,6 +72,7 @@ export class Pager {
         this.data = data.data;
         this.lastPage = data.lastPage;
         this.totalSize = data.totalSize;
+        this.startIndex = ((this.page - 1) * this.size) + 1;
       });
     }
   }

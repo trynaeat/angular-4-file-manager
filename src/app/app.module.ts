@@ -14,6 +14,7 @@ import { UserService } from './_services/user.service';
 import { FileBrowserComponent } from './_directives/file-browser/file-browser.component';
 import { ModalComponent } from './_directives/modal/modal.component';
 import { ProgressBarComponent } from './_directives/progress-bar/progress-bar.component';
+import { PagerComponent } from './_directives/pager/pager.component';
 
 const appRoutes: Routes = [
   {
@@ -48,7 +49,8 @@ const appRoutes: Routes = [
     HomeComponent,
     FileBrowserComponent,
     ModalComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    PagerComponent
   ],
   imports: [
     BrowserModule,

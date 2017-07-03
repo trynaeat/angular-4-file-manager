@@ -40,16 +40,25 @@ router.post('/token', (req, res) => {
 });
 
 router.get('/files', auth.authenticate(), (req, res) => {
+  var db;
   var page = parseInt(req.query.page);
   var size = parseInt(req.query.size);
+  var response = {};
   if(!page || !size || page < 1) {
     return res.status(400).end();
   }
-  appDB.connect().then(function(db) {
+  appDB.connect().then(function(res) {
+    db = res
+    return db.collection('files').find().count();
+  })
+  .then(function(count) {
+    response.totalSize = count;
+    response.lastPage = (Math.ceil(count / size) > page ? false : true);
     return db.collection('files').find({}, { _id : 1, description : 1, filename : 1 }).skip((page - 1) * size).limit(size).toArray();
   })
   .then(function(files) {
-    res.json(files);
+    response.data = files;
+    res.json(response);
   })
   .catch(function(err) {
     console.log(err);

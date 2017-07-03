@@ -3,6 +3,7 @@ import { UserService } from '../../_services/user.service';
 import { AuthenticationService } from '../../_services/authentication.service';
 import { ModalComponent } from '../modal/modal.component';
 import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
+import { Pager } from '../pager/pager.component';
 
 @Component({
   selector: 'app-file-browser',
@@ -18,6 +19,8 @@ export class FileBrowserComponent implements OnInit {
   size = 100;
   loading = true;
   files = [];
+
+  pager = new Pager(3, this.userService, 'getFiles');
 
   constructor(
     private userService : UserService,
@@ -35,20 +38,7 @@ export class FileBrowserComponent implements OnInit {
     this.size = 100;
     this.loading = true;
     this.progressBar.setProgress(0);
-    this.getFiles(this.page, this.size);
-  }
-
-  getFiles(page : number, size : number) {
-    return this.userService.getFiles(page, size)
-    .subscribe(
-      data => {
-        this.files = data;
-        this.loading = false;
-      },
-      error => {
-        console.log('Error getting files ' + error);
-      }
-    );
+    this.pager.reset();
   }
 
   deleteFile(id: string) {
@@ -61,7 +51,7 @@ export class FileBrowserComponent implements OnInit {
           console.log('Error deleting file ' + error);
         },
         () => {
-          this.getFiles(this.page, this.size);
+          this.pager.reset();
         }
       )
   }
@@ -90,7 +80,7 @@ export class FileBrowserComponent implements OnInit {
             console.log('finally');
             this.progressModal.hide();
             this.progressBar.setProgress(0);
-            this.getFiles(this.page, this.size);
+            this.pager.reset();
           }
         )
     }

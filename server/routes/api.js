@@ -7,7 +7,7 @@ const passwordHash = require('password-hash');
 const jwt = require('jwt-simple');
 var ObjectID = require('mongodb').ObjectID;
 var multer = require('multer');
-var upload = multer({ dest : '/Users/jakparks/uploads/' });
+var upload = multer({ dest : config.file.uploadDestination });
 var fs = require('fs');
 var Promise = require('bluebird');
 

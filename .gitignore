@@ -43,3 +43,5 @@ Thumbs.db
 
 # SSL Cert Stuff
 /server/ssl
+# Personal Config
+/server/config.js

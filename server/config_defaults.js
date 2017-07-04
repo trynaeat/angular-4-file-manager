@@ -1,7 +1,7 @@
 module.exports = {
   jwtSecret: 'verysecretjwt',
   file: {
-    uploadDestination: '/Users/jakparks/uploads/',
+    uploadDestination: '/somepath/',
     editableFields: {
       description: true
     }

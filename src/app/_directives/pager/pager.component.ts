@@ -43,9 +43,11 @@ export class Pager {
     public fnName: string
   ) {}
 
-  public reset() {
-    this.page = 1;
-    this.service[this.fnName](1, this.size).subscribe(data => {
+  public reload(resetPaging: boolean) {
+    if(resetPaging) {
+      this.page = 1;
+    }
+    this.service[this.fnName](this.page, this.size).subscribe(data => {
       this.data = data.data;
       this.lastPage = data.lastPage;
       this.totalSize = data.totalSize;

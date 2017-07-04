@@ -41,7 +41,7 @@ export class FileBrowserComponent implements OnInit {
     this.size = 100;
     this.loading = true;
     this.progressBar.setProgress(0);
-    this.pager.reset();
+    this.pager.reload(true);
   }
 
   editFile(file: any) {
@@ -60,7 +60,7 @@ export class FileBrowserComponent implements OnInit {
         },
         () => {
           this.editModal.hide();
-          this.pager.reset();
+          this.pager.reload(false);
         }
       )
   }
@@ -75,7 +75,11 @@ export class FileBrowserComponent implements OnInit {
           console.log('Error deleting file ' + error);
         },
         () => {
-          this.pager.reset();
+          if(this.pager.data.length > 1 || this.pager.page === 1) {
+            this.pager.reload(false);
+          } else {
+            this.pager.getPreviousPage();
+          }
         }
       )
   }
@@ -104,7 +108,12 @@ export class FileBrowserComponent implements OnInit {
             console.log('finally');
             this.progressModal.hide();
             this.progressBar.setProgress(0);
-            this.pager.reset();
+            if(this.pager.data.length < this.pager.size) {
+              this.pager.reload(false);
+            } else {
+              this.pager.lastPage = false;
+              this.pager.getNextPage();
+            }
           }
         )
     }

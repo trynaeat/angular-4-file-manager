@@ -31,6 +31,18 @@ a {
 
 h1 {
   display: inline;
+  color: white;
+}
+
+.app-modal-body span {
+  color: white;
+  font-size: 1.5em;
+}
+
+.app-modal-body textarea {
+  height: 200px;
+  width: 420px;
+  resize: vertical;
 }
 
 textarea {

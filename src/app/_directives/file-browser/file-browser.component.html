@@ -9,17 +9,31 @@
       <span [textContent]="file.description" class="description"></span>
       <span>
         <a title="download" target="_self" href="/api/file/{{file._id}}?token={{authService.getToken()}}" download><i class="fa fa-download" aria-hidden="true"></i></a>
-        <button title="edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+        <button title="edit" (click)="editFile(file)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
         <button title="delete" (click)="deleteFile(file._id)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
       </span>
     </div>
     <app-pager [pager]="pager"></app-pager>
 </div>
-<app-modal #modal>
+<app-modal #uploadModal>
   <div class="app-modal-header">
     <h1>Uploading...</h1>
   </div>
   <div class="app-modal-body">
     <app-progress-bar></app-progress-bar>
+  </div>
+</app-modal>
+
+<app-modal #editModal>
+  <div class="app-modal-header">
+    <h1>Edit File Properties</h1>
+  </div>
+  <div class="app-modal-body">
+    <div><span>Add a Description</span></div>
+    <textarea [(ngModel)]=selectedFile.description></textarea>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" (click)="submitEdit(selectedFile)" class="btn btn-success">Submit</button>
+    <button type="button" (click)="selectedFile={};editModal.hide();" class="btn btn-warning">Cancel</button>
   </div>
 </app-modal>

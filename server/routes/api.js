@@ -87,6 +87,30 @@ router.get('/file/:id', auth.authenticateQuery(), (req, res) => {
   });
 });
 
+router.post('/file/:id', auth.authenticate(), (req, res) => {
+  var id = req.params.id ? new ObjectID(req.params.id) : null;
+  if(!id) {
+    return res.status(400).end();
+  }
+  var updateObj = {};
+  var file = req.body;
+  Object.keys(file).forEach(function(key) {
+    if(config.file.editableFields[key]) {
+      updateObj[key] = file[key];
+    }
+  });
+  appDB.connect().then(function(db) {
+    return db.collection('files').updateOne({ _id : id }, { $set : updateObj });
+  })
+  .then(function() {
+    res.json({ status: 'success' }).status(200).end();
+  })
+  .catch(function(err) {
+    console.log(err);
+    res.status(500).end();
+  });
+});
+
 router.delete('/file/:id', auth.authenticate(), (req, res) => {
   var id = req.params.id ? new ObjectID(req.params.id) : null;
   if(!id) {

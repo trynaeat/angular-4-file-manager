@@ -1,5 +1,5 @@
 .file-item > span.title {
-  color: white;
+  color: rgb(77, 77, 77);
   font-size: 2em;
   display: block;
 }
@@ -7,16 +7,22 @@
 .file-item> span.description {
   color: white;
   font-size: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   display: block;
   font-style: italic;
 }
 
 div.file-item {
-  background-color: rgb(255, 120, 0);
-  border-radius: 25px;
+  background: -webkit-linear-gradient(left top, rgb(255, 170, 128), rgb(255, 85, 0)); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom right, rgb(255, 170, 128), rgb(255, 85, 0)); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom right, rgb(255, 170, 128), rgb(255, 85, 0)); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom right, rgb(255, 170, 128), rgb(255, 85, 0)); /* Standard syntax */
+  border-radius: 6px;
   padding: 1em 1em 1em 1em;
   margin-bottom: 1em;
-  box-shadow: 5px 5px black;
+  box-shadow: 5px 5px 5px black;
 }
 
 a {
@@ -25,4 +31,8 @@ a {
 
 h1 {
   display: inline;
+}
+
+textarea {
+  overflow: hidden;
 }

@@ -4,6 +4,7 @@ import { AuthenticationService } from '../../_services/authentication.service';
 import { ModalComponent } from '../modal/modal.component';
 import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 import { Pager } from '../pager/pager.component';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-file-browser',
@@ -12,13 +13,15 @@ import { Pager } from '../pager/pager.component';
 })
 export class FileBrowserComponent implements OnInit {
   @ViewChild('fileInput') fileInput:ElementRef;
-  @ViewChild(ModalComponent) progressModal:ModalComponent;
+  @ViewChild('uploadModal') progressModal:ModalComponent;
+  @ViewChild('editModal') editModal:ModalComponent;
   @ViewChild(ProgressBarComponent) progressBar:ProgressBarComponent;
 
   page = 1;
   size = 100;
   loading = true;
   files = [];
+  selectedFile = {};
 
   pager = new Pager(3, this.userService, 'getFiles');
 
@@ -39,6 +42,27 @@ export class FileBrowserComponent implements OnInit {
     this.loading = true;
     this.progressBar.setProgress(0);
     this.pager.reset();
+  }
+
+  editFile(file: any) {
+    this.selectedFile = _.cloneDeep(file);
+    this.editModal.show();
+  }
+
+  submitEdit(file: any) {
+    return this.userService.updateFile(file)
+      .subscribe(
+        data => {
+          console.log('updated');
+        },
+        error => {
+          console.log('Error updating file ' + error);
+        },
+        () => {
+          this.editModal.hide();
+          this.pager.reset();
+        }
+      )
   }
 
   deleteFile(id: string) {

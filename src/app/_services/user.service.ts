@@ -74,4 +74,14 @@ export class UserService {
 
   }
 
+  updateFile(file: any) {
+    var requestOptions = this.jwt();
+    requestOptions.headers.append('Content-type', 'application/json');
+    return this.http.post('/api/file/' + file._id, JSON.stringify(file), requestOptions)
+      .map((response : Response) => {
+        let body = response.json();
+        return body || {};
+      });
+  }
+
 }

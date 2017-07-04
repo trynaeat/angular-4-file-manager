@@ -1,3 +1,8 @@
 module.exports = {
-  jwtSecret: 'verysecretjwt'
+  jwtSecret: 'verysecretjwt',
+  file: {
+    editableFields: {
+      description: true
+    }
+  }
 };
